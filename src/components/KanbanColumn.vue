@@ -2,8 +2,16 @@
   import type { Task, TaskStatus } from '@/types'
   import KanbanCard from './KanbanCard.vue'
 
-  type Props = { status: TaskStatus, title: string, tasks: Task[] }
-  type Emit = { (e: 'drop', cardId: string, status: TaskStatus, newStatus: TaskStatus): void }
+  export interface TaskForm {
+    title: string
+    description: string
+    status: TaskStatus
+  }
+  interface Props { status: TaskStatus, title: string, tasks: Task[] }
+  interface Emit {
+    (e: 'drop', cardId: string, status: TaskStatus, newStatus: TaskStatus): void
+    (e: 'add', status: TaskStatus): void
+  }
 
   const props = defineProps<Props>()
   const emit = defineEmits<Emit>()
@@ -22,6 +30,10 @@
     event.dataTransfer?.setData('status', props.status)
   }
 
+  function onOpenModal () {
+    emit('add', props.status)
+  }
+
 </script>
 
 <template>
@@ -34,19 +46,29 @@
     @dragover.prevent
     @drop="onDrop"
   >
-    <div>
+    <div class="d-flex align-center justify-space-between py-2 px-4">
       <v-badge
         class="w-100"
         :color="props.status === 'completed' ? 'success' : props.status === 'in-progress' ? 'warning' : undefined"
         dot
         location="left center"
-        :offset-x="12"
       >
-        <h2 class="text-subtitle-1 font-weight-bold w-100 pa-2 pl-7 border-b-md">
+        <h2 class="text-subtitle-1 font-weight-bold px-2 pl-4">
           {{ title }}
         </h2>
       </v-badge>
+      <v-icon-btn
+        class="rounded-sm"
+        icon="mdi-plus"
+        size="24"
+        variant="flat"
+        @click="onOpenModal"
+      >
+        <v-icon size="16" />
+      </v-icon-btn>
     </div>
+
+    <v-divider />
 
     <div class="ga-2 d-flex flex-column pa-2">
       <v-col v-for="task in tasks" :key="task.id" class="pa-0">

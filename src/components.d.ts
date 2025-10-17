@@ -11,6 +11,7 @@ declare module 'vue' {
     KanbanBoard: typeof import('./components/KanbanBoard.vue')['default']
     KanbanCard: typeof import('./components/KanbanCard.vue')['default']
     KanbanColumn: typeof import('./components/KanbanColumn.vue')['default']
+    KanbanForm: typeof import('./components/KanbanForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

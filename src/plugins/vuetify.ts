@@ -5,6 +5,7 @@
  */
 
 import { createVuetify } from 'vuetify'
+import { VIconBtn } from 'vuetify/labs/VIconBtn'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 
@@ -12,5 +13,8 @@ import 'vuetify/styles'
 export default createVuetify({
   theme: {
     defaultTheme: 'system',
+  },
+  components: {
+    VIconBtn,
   },
 })
