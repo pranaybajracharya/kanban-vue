@@ -1,30 +1,45 @@
 <script setup lang="ts">
   import type { Task } from '@/types'
+  import { ref } from 'vue'
 
   type Props = Task
   type Emit = { (e: 'dragstart', event: DragEvent): void }
 
   defineProps<Props>()
-  defineEmits<Emit>()
+  const emit = defineEmits<Emit>()
+
+  const isDragging = ref(false)
+
+  function onDragStart (event: DragEvent) {
+    isDragging.value = true
+    emit('dragstart', event)
+  }
+
+  function onDragEnd () {
+    isDragging.value = false
+  }
 
 </script>
 
 <template>
   <v-card
-    class="background-color=primary"
+    class="bg-foreground"
+    :class="{ 'cursor-grab': !isDragging, 'cursor-grabbing': isDragging }"
     draggable="true"
-    variant="outlined"
+    rounded="lg"
+    variant="tonal"
     width="100%"
-    @dragstart="$emit('dragstart', $event)"
+    @dragend="onDragEnd"
+    @dragstart="onDragStart"
   >
     <template #title>
-      <h2 class="text-h6 font-weight-bold">
+      <h3 class="text-subtitle-2 font-weight-bold">
         {{ title }}
-      </h2>
+      </h3>
     </template>
 
     <template #subtitle>
-      <div class="text-subtitle-2">
+      <div class="text-body-2">
         {{ description }}
       </div>
     </template>

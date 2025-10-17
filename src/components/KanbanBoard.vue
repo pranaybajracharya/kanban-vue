@@ -41,13 +41,10 @@
 </script>
 
 <template>
-  <h1>Kanban Board</h1>
-  <div class="fill-height overflow-auto">
-    <div class="d-flex ga-2">
-      <KanbanColumn status="open" :tasks="tasks.open" title="Open" @drop="onDrop" />
-      <KanbanColumn status="in-progress" :tasks="tasks['in-progress']" title="In Progress" @drop="onDrop" />
-      <KanbanColumn status="completed" :tasks="tasks.completed" title="Completed" @drop="onDrop" />
-    </div>
-
+  <h1 class="mb-2">Kanban Board</h1>
+  <div class="overflow-auto-x d-flex ga-4 h-100">
+    <KanbanColumn status="open" :tasks="tasks.open" title="Open" @drop="onDrop" />
+    <KanbanColumn status="in-progress" :tasks="tasks['in-progress']" title="In Progress" @drop="onDrop" />
+    <KanbanColumn status="completed" :tasks="tasks.completed" title="Completed" @drop="onDrop" />
   </div>
 </template>

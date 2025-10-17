@@ -26,18 +26,29 @@
 
 <template>
   <v-card
-    class="pa-2"
+    class="cursor-default"
     min-width="350px"
-    variant="outlined"
+    rounded="lg"
+    variant="tonal"
     @dragenter.prevent
     @dragover.prevent
     @drop="onDrop"
   >
-    <h2 class="text-h5 font-weight-bold mb-2">
-      {{ title }}
-    </h2>
+    <div>
+      <v-badge
+        class="w-100"
+        :color="props.status === 'completed' ? 'success' : props.status === 'in-progress' ? 'warning' : undefined"
+        dot
+        location="left center"
+        :offset-x="12"
+      >
+        <h2 class="text-subtitle-1 font-weight-bold w-100 pa-2 pl-7 border-b-md">
+          {{ title }}
+        </h2>
+      </v-badge>
+    </div>
 
-    <div class="ga-2 d-flex flex-column">
+    <div class="ga-2 d-flex flex-column pa-2">
       <v-col v-for="task in tasks" :key="task.id" class="pa-0">
         <KanbanCard v-bind="task" @dragstart="onDragStart($event, task.id)" />
       </v-col>
