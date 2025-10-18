@@ -58,8 +58,8 @@
 </script>
 
 <template>
-  <h1 class="mb-2">Kanban Board</h1>
-  <div class="overflow-auto-x d-flex ga-4 h-100">
+  <h1 class="px-4 py-2">Kanban Board</h1>
+  <div class="overflow-x-auto d-flex ga-4 h-100 px-4 pb-4">
     <KanbanColumn
       status="open"
       :tasks="getTasksByStatus('open')"

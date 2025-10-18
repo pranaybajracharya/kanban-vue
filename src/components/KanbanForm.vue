@@ -56,7 +56,7 @@
 </script>
 
 <template>
-  <v-dialog v-model="kanbanFormStore.open" max-width="600">
+  <v-dialog v-model="kanbanFormStore.open" max-width="600" scroll-strategy="none">
     <v-card rounded="lg">
       <v-card-title>
         <span class="text-subtitle-1 font-weight-bold">{{ kanbanFormStore.id ? 'Edit Task' : 'Add New Task' }}</span>

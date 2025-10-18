@@ -1,5 +1,5 @@
 <template>
-  <main class="pa-4 h-100 d-flex flex-column">
+  <main class="h-screen d-flex flex-column">
     <KanbanBoard />
   </main>
 </template>

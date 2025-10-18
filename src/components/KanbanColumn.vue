@@ -40,10 +40,11 @@
 
 <template>
   <v-card
-    class="cursor-default"
+    class="cursor-default d-flex flex-column"
     min-width="350px"
     rounded="lg"
     variant="tonal"
+    width="350px"
     @dragenter.prevent
     @dragover.prevent
     @drop="onDrop"
@@ -72,7 +73,7 @@
 
     <v-divider />
 
-    <div class="ga-2 d-flex flex-column pa-2">
+    <div class="ga-2 d-flex flex-column pa-2 overflow-y-auto">
       <v-col v-for="task in tasks" :key="task.id" class="pa-0">
         <KanbanCard v-bind="task" :status="props.status" @dragstart="onDragStart($event, task.id)" />
       </v-col>
