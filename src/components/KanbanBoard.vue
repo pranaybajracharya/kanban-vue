@@ -28,6 +28,7 @@
     if (statusToEdit) {
       statusToEdit.title = task.title
       statusToEdit.description = task.description
+      statusToEdit.status = task.status
     }
   }
 

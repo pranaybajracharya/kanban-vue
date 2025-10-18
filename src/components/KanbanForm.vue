@@ -53,6 +53,12 @@
       onCloseModal()
     }
   }
+
+  const statusOptions: { title: string, value: TaskStatus }[] = [
+    { title: 'Open', value: 'open' },
+    { title: 'In Progress', value: 'in-progress' },
+    { title: 'Completed', value: 'completed' },
+  ]
 </script>
 
 <template>
@@ -79,6 +85,15 @@
             label="Description"
             rows="4"
             :rules="[rules.required]"
+            variant="outlined"
+          />
+          <v-select
+            v-model="kanbanFormStore.status"
+            hide-details="auto"
+            item-title="title"
+            item-value="value"
+            :items="statusOptions"
+            label="Status"
             variant="outlined"
           />
         </v-card-text>
