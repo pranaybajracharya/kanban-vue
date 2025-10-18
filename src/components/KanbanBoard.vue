@@ -47,6 +47,10 @@
     }
   }
 
+  function onDelete (id: string) {
+    tasks.value = tasks.value.filter(t => t.id !== id)
+  }
+
   function getTasksByStatus (status: TaskStatus) {
     return tasks.value.filter(task => task.status === status)
   }
@@ -77,6 +81,7 @@
   </div>
   <KanbanForm
     @add="onAdd"
+    @delete="onDelete"
     @edit="onEdit"
   />
 </template>

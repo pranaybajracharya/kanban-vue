@@ -19,6 +19,7 @@
   const emit = defineEmits<{
     (e: 'add', task: KanbanFormAddSchema): void
     (e: 'edit', task: KanbanFormEditSchema): void
+    (e: 'delete', id: string): void
   }>()
 
   const formRef = ref<HTMLFormElement | null>(null)
@@ -43,6 +44,14 @@
       emit('add', { title: title, description: description, status: status })
     }
     onCloseModal()
+  }
+
+  function onDelete () {
+    const { id } = kanbanFormStore
+    if (id) {
+      emit('delete', id)
+      onCloseModal()
+    }
   }
 </script>
 
@@ -74,6 +83,15 @@
           />
         </v-card-text>
         <v-card-actions class="px-4 py-4">
+          <v-icon-btn
+            class="rounded-sm border-error"
+            icon="mdi-delete"
+            size="36"
+            variant="tonal"
+            @click="onDelete"
+          >
+            <v-icon color="red" size="16" />
+          </v-icon-btn>
           <v-spacer />
           <v-btn
             class="text-body-2"
