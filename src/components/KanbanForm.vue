@@ -84,6 +84,7 @@
         </v-card-text>
         <v-card-actions class="px-4 py-4">
           <v-icon-btn
+            v-if="kanbanFormStore.id"
             class="rounded-sm border-error"
             icon="mdi-delete"
             size="36"
