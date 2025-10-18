@@ -83,16 +83,7 @@
           />
         </v-card-text>
         <v-card-actions class="px-4 py-4">
-          <v-icon-btn
-            v-if="kanbanFormStore.id"
-            class="rounded-sm border-error"
-            icon="mdi-delete"
-            size="36"
-            variant="tonal"
-            @click="onDelete"
-          >
-            <v-icon color="red" size="16" />
-          </v-icon-btn>
+          <KanbanDeleteButton v-if="kanbanFormStore.id" @delete="onDelete" />
           <v-spacer />
           <v-btn
             class="text-body-2"
