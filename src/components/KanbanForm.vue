@@ -1,57 +1,70 @@
 <script setup lang="ts">
+  import type { TaskStatus } from '@/types'
   import { ref } from 'vue'
+  import { kanbanFormStore } from '@/store/KanbanFormStore'
 
-  export type KanbanFormSchema = {
+  export type KanbanFormAddSchema = {
     title: string
     description: string
+    status: TaskStatus
+  }
+
+  export type KanbanFormEditSchema = {
+    id: string
+    title: string
+    description: string
+    status: TaskStatus
   }
 
   const emit = defineEmits<{
-    (e: 'submit', task: KanbanFormSchema): void
+    (e: 'add', task: KanbanFormAddSchema): void
+    (e: 'edit', task: KanbanFormEditSchema): void
   }>()
-  const open = defineModel<boolean>()
 
   const formRef = ref<HTMLFormElement | null>(null)
-  const formData = ref<KanbanFormSchema>({
-    title: '',
-    description: '',
-  })
 
   const rules = {
-    required: (value: string) => !!value || 'This field is required',
+    required: (value: string) => !!value?.trim() || 'This field is required',
   }
 
   function onCloseModal () {
-    open.value = false
+    kanbanFormStore.setOpen(false)
   }
 
   function onSubmit () {
-    emit('submit', { ...formData.value })
-    onCloseModal()
-    formRef.value?.reset()
-  }
+    const { id, title, description, status } = kanbanFormStore
+    if (!title.trim() || !description.trim()) {
+      return
+    }
 
+    if (id) {
+      emit('edit', { id: id, title: title, description: description, status: status })
+    } else {
+      emit('add', { title: title, description: description, status: status })
+    }
+    onCloseModal()
+  }
 </script>
 
 <template>
-  <v-dialog v-model="open" max-width="600">
+  <v-dialog v-model="kanbanFormStore.open" max-width="600">
     <v-card rounded="lg">
       <v-card-title>
-        <span class="text-subtitle-1 font-weight-bold">Add New Task</span>
+        <span class="text-subtitle-1 font-weight-bold">{{ kanbanFormStore.id ? 'Edit Task' : 'Add New Task' }}</span>
       </v-card-title>
       <v-form ref="formRef" @submit.prevent="onSubmit">
         <v-card-text class="px-4 pt-2 pb-0">
           <v-text-field
-            v-model="formData.title"
+            v-model="kanbanFormStore.title"
             autofocus
-            class="mb-4 "
+            class="mb-4"
             hide-details="auto"
             label="Title"
             :rules="[rules.required]"
             variant="outlined"
           />
           <v-textarea
-            v-model="formData.description"
+            v-model="kanbanFormStore.description"
             class="mb-2"
             hide-details="auto"
             label="Description"

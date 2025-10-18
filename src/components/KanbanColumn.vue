@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import type { Task, TaskStatus } from '@/types'
+  import { kanbanFormStore } from '@/store/KanbanFormStore'
   import KanbanCard from './KanbanCard.vue'
 
   export interface TaskForm {
@@ -9,8 +10,7 @@
   }
   interface Props { status: TaskStatus, title: string, tasks: Task[] }
   interface Emit {
-    (e: 'drop', cardId: string, status: TaskStatus, newStatus: TaskStatus): void
-    (e: 'add', status: TaskStatus): void
+    (e: 'drop', cardId: string, newStatus: TaskStatus): void
   }
 
   const props = defineProps<Props>()
@@ -19,21 +19,23 @@
   function onDrop (event: DragEvent) {
     event.preventDefault()
     const taskId = event.dataTransfer?.getData('taskId')
-    const status = event.dataTransfer?.getData('status') as TaskStatus
-    if (taskId && status && status !== props.status) {
-      emit('drop', taskId, status, props.status)
+    if (taskId) {
+      emit('drop', taskId, props.status)
     }
   }
 
   function onDragStart (event: DragEvent, taskId: string) {
     event.dataTransfer?.setData('taskId', taskId)
-    event.dataTransfer?.setData('status', props.status)
   }
 
-  function onOpenModal () {
-    emit('add', props.status)
+  function onAdd () {
+    kanbanFormStore.setOpen(true)
+    kanbanFormStore.setValue({
+      title: '',
+      description: '',
+      status: props.status,
+    })
   }
-
 </script>
 
 <template>
@@ -62,7 +64,7 @@
         icon="mdi-plus"
         size="24"
         variant="flat"
-        @click="onOpenModal"
+        @click="onAdd"
       >
         <v-icon size="16" />
       </v-icon-btn>
@@ -72,7 +74,7 @@
 
     <div class="ga-2 d-flex flex-column pa-2">
       <v-col v-for="task in tasks" :key="task.id" class="pa-0">
-        <KanbanCard v-bind="task" @dragstart="onDragStart($event, task.id)" />
+        <KanbanCard v-bind="task" :status="props.status" @dragstart="onDragStart($event, task.id)" />
       </v-col>
     </div>
   </v-card>

@@ -1,11 +1,12 @@
 <script setup lang="ts">
   import type { Task } from '@/types'
   import { ref } from 'vue'
+  import { kanbanFormStore } from '@/store/KanbanFormStore'
 
-  type Props = Task
-  type Emit = { (e: 'dragstart', event: DragEvent): void }
+  interface Props extends Task {}
+  interface Emit { (e: 'dragstart', event: DragEvent): void }
 
-  defineProps<Props>()
+  const props = defineProps<Props>()
   const emit = defineEmits<Emit>()
 
   const isDragging = ref(false)
@@ -19,6 +20,15 @@
     isDragging.value = false
   }
 
+  function onClick () {
+    kanbanFormStore.setOpen(true)
+    kanbanFormStore.setValue({
+      id: props.id,
+      title: props.title,
+      description: props.description,
+      status: props.status,
+    })
+  }
 </script>
 
 <template>
@@ -29,6 +39,7 @@
     rounded="lg"
     variant="tonal"
     width="100%"
+    @click="onClick"
     @dragend="onDragEnd"
     @dragstart="onDragStart"
   >
