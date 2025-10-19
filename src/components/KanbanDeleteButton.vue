@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <v-dialog max-width="400">
+  <v-dialog :attach="true" max-width="400">
     <template #activator="{ props: activatorProps }">
       <v-icon-btn
         v-bind="activatorProps"
@@ -32,6 +32,7 @@
         <v-card-actions>
           <v-spacer />
           <v-btn
+            aria-label="Cancel"
             class="text-body-2"
             variant="text"
             @click="isActive.value = false"
@@ -39,6 +40,7 @@
             Cancel
           </v-btn>
           <v-btn
+            aria-label="Confirm Delete"
             class="text-body-2"
             color="error"
             type="submit"
