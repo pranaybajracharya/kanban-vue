@@ -50,9 +50,6 @@
     rounded="lg"
     variant="tonal"
     width="350px"
-    @dragenter.prevent
-    @dragover.prevent
-    @drop="onDrop"
   >
     <div class="d-flex align-center justify-space-between py-2 px-4">
       <v-badge
@@ -79,7 +76,13 @@
 
     <v-divider />
 
-    <div class="ga-2 d-flex flex-column pa-2 overflow-y-auto">
+    <div
+      class="ga-2 d-flex flex-column pa-2 overflow-y-auto"
+      data-droppable="true"
+      @dragenter.prevent
+      @dragover.prevent
+      @drop="onDrop"
+    >
       <KanbanCard
         v-for="task in tasks"
         :key="task.id"
