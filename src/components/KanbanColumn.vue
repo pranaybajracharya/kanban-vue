@@ -31,6 +31,16 @@
       status: props.status,
     })
   }
+
+  function onEdit (task: Task) {
+    kanbanFormStore.setOpen(true)
+    kanbanFormStore.setValue({
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      status: task.status,
+    })
+  }
 </script>
 
 <template>
@@ -72,7 +82,9 @@
       <KanbanCard
         v-for="task in tasks"
         :key="task.id"
-        v-bind="task"
+        :description="task.description"
+        :title="task.title"
+        @click="onEdit(task)"
         @dragstart="onDragStart($event, task.id)"
       />
     </div>
