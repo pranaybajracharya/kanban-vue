@@ -67,6 +67,7 @@
             class="mb-4"
             hide-details="auto"
             label="Title"
+            name="title"
             :rules="[rules.required]"
             variant="outlined"
           />
@@ -75,6 +76,7 @@
             class="mb-2"
             hide-details="auto"
             label="Description"
+            name="description"
             rows="4"
             :rules="[rules.required]"
             variant="outlined"
@@ -86,6 +88,7 @@
             item-value="value"
             :items="statusOptions"
             label="Status"
+            name="status"
             variant="outlined"
           />
         </v-card-text>
@@ -93,6 +96,7 @@
           <KanbanDeleteButton v-if="kanbanFormStore.id" @delete="onDelete" />
           <v-spacer />
           <v-btn
+            aria-label="Cancel"
             class="text-body-2"
             variant="text"
             @click="onCloseModal"
@@ -100,6 +104,7 @@
             Cancel
           </v-btn>
           <v-btn
+            aria-label="Submit"
             class="text-body-2"
             color="accent"
             type="submit"

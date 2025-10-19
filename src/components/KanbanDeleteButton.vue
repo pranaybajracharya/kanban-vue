@@ -13,6 +13,7 @@
     <template #activator="{ props: activatorProps }">
       <v-icon-btn
         v-bind="activatorProps"
+        aria-label="Delete Task"
         class="rounded-sm border-error"
         icon="mdi-delete"
         size="36"
