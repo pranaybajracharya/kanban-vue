@@ -32,27 +32,36 @@
 </script>
 
 <template>
-  <v-card
-    class="bg-foreground"
+  <button
+    class="w-100 text-left"
     :class="{ 'cursor-grab': !isDragging, 'cursor-grabbing': isDragging }"
     draggable="true"
-    rounded="lg"
-    variant="tonal"
-    width="100%"
     @click="onClick"
     @dragend="onDragEnd"
     @dragstart="onDragStart"
   >
-    <template #title>
-      <h3 class="text-subtitle-2 font-weight-bold">
-        {{ title }}
-      </h3>
-    </template>
+    <v-card rounded="lg" variant="tonal">
+      <template #title>
+        <h3 class="text-subtitle-2 font-weight-bold">
+          {{ title }}
+        </h3>
+      </template>
 
-    <template #subtitle>
-      <div class="text-body-2">
-        {{ description }}
-      </div>
-    </template>
-  </v-card>
+      <template #subtitle>
+        <div class="text-body-2 description-truncate">
+          {{ description }}
+        </div>
+      </template>
+    </v-card>
+  </button>
 </template>
+
+<style scoped>
+.description-truncate {
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

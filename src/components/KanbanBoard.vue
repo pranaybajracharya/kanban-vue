@@ -2,7 +2,7 @@
   import type { KanbanFormAddSchema, KanbanFormEditSchema } from './KanbanForm.vue'
   import type { Task, TaskStatus } from '@/types'
   import { ref } from 'vue'
-  import { initialTasks } from '@/data/tasks'
+  import { initialTasks, statuses } from '@/data/tasks'
 
   const tasks = ref<Task[]>(initialTasks)
 
@@ -39,28 +39,16 @@
   function getTasksByStatus (status: TaskStatus) {
     return tasks.value.filter(task => task.status === status)
   }
-
 </script>
 
 <template>
   <h1 class="px-4 py-2">Kanban Board</h1>
   <div class="overflow-x-auto d-flex ga-4 h-100 px-4 pb-4">
     <KanbanColumn
-      status="open"
-      :tasks="getTasksByStatus('open')"
-      title="Open"
-      @drop="onDrop"
-    />
-    <KanbanColumn
-      status="in-progress"
-      :tasks="getTasksByStatus('in-progress')"
-      title="In Progress"
-      @drop="onDrop"
-    />
-    <KanbanColumn
-      status="completed"
-      :tasks="getTasksByStatus('completed')"
-      title="Completed"
+      v-for="column in statuses"
+      :key="column.status"
+      v-bind="column"
+      :tasks="getTasksByStatus(column.status)"
       @drop="onDrop"
     />
   </div>

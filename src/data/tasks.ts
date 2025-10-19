@@ -18,3 +18,14 @@ export const initialTasks: Task[] = [
   { id: crypto.randomUUID(), title: 'Implement logging and error tracking', description: 'Implement logging and error tracking using Sentry', status: 'completed' },
   { id: crypto.randomUUID(), title: 'Optimize images', description: 'Optimize images to reduce page load time', status: 'completed' },
 ]
+
+export const statuses = [
+  { status: 'open', title: 'Open', color: 'white' },
+  { status: 'in-progress', title: 'In Progress', color: 'orange' },
+  { status: 'completed', title: 'Completed', color: 'green' },
+] as const
+
+export const statusOptions = statuses.map(status => ({
+  title: status.title,
+  value: status.status,
+}))

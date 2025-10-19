@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import type { TaskStatus } from '@/types'
-  import { ref } from 'vue'
+  import { statusOptions } from '@/data/tasks'
   import { kanbanFormStore } from '@/store/KanbanFormStore'
 
   export type KanbanFormAddSchema = {
@@ -22,8 +22,6 @@
     (e: 'delete', id: string): void
   }>()
 
-  const formRef = ref<HTMLFormElement | null>(null)
-
   const rules = {
     required: (value: string) => !!value?.trim() || 'This field is required',
   }
@@ -39,9 +37,9 @@
     }
 
     if (id) {
-      emit('edit', { id: id, title: title, description: description, status: status })
+      emit('edit', { id, title, description, status })
     } else {
-      emit('add', { title: title, description: description, status: status })
+      emit('add', { title, description, status })
     }
     onCloseModal()
   }
@@ -53,12 +51,6 @@
       onCloseModal()
     }
   }
-
-  const statusOptions: { title: string, value: TaskStatus }[] = [
-    { title: 'Open', value: 'open' },
-    { title: 'In Progress', value: 'in-progress' },
-    { title: 'Completed', value: 'completed' },
-  ]
 </script>
 
 <template>
@@ -67,7 +59,7 @@
       <v-card-title>
         <span class="text-subtitle-1 font-weight-bold">{{ kanbanFormStore.id ? 'Edit Task' : 'Add New Task' }}</span>
       </v-card-title>
-      <v-form ref="formRef" @submit.prevent="onSubmit">
+      <v-form @submit.prevent="onSubmit">
         <v-card-text class="px-4 pt-2 pb-0">
           <v-text-field
             v-model="kanbanFormStore.title"

@@ -3,12 +3,7 @@
   import { kanbanFormStore } from '@/store/KanbanFormStore'
   import KanbanCard from './KanbanCard.vue'
 
-  export interface TaskForm {
-    title: string
-    description: string
-    status: TaskStatus
-  }
-  interface Props { status: TaskStatus, title: string, tasks: Task[] }
+  interface Props { status: TaskStatus, title: string, color: string, tasks: Task[] }
   interface Emit {
     (e: 'drop', cardId: string, newStatus: TaskStatus): void
   }
@@ -52,7 +47,7 @@
     <div class="d-flex align-center justify-space-between py-2 px-4">
       <v-badge
         class="w-100"
-        :color="props.status === 'completed' ? 'success' : props.status === 'in-progress' ? 'warning' : undefined"
+        :color="props.color"
         dot
         location="left center"
       >
@@ -74,9 +69,12 @@
     <v-divider />
 
     <div class="ga-2 d-flex flex-column pa-2 overflow-y-auto">
-      <v-col v-for="task in tasks" :key="task.id" class="pa-0">
-        <KanbanCard v-bind="task" :status="props.status" @dragstart="onDragStart($event, task.id)" />
-      </v-col>
+      <KanbanCard
+        v-for="task in tasks"
+        :key="task.id"
+        v-bind="task"
+        @dragstart="onDragStart($event, task.id)"
+      />
     </div>
   </v-card>
 </template>
