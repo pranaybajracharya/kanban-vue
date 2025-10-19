@@ -66,6 +66,7 @@
         </h2>
       </v-badge>
       <v-icon-btn
+        :aria-label="`Add ${title} Task`"
         class="rounded-sm"
         icon="mdi-plus"
         size="24"
