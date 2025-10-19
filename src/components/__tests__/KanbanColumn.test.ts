@@ -1,24 +1,12 @@
 import type { Task } from '@/types'
-import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-import { VIconBtn } from 'vuetify/labs/VIconBtn'
+import { mountWithVuetify } from '@/test/helpers'
 import KanbanCard from '../KanbanCard.vue'
 import KanbanColumn from '../KanbanColumn.vue'
 
-const vuetify = createVuetify({
-  components: { ...components, VIconBtn },
-  directives,
-})
-
 describe('KanbanColumn', () => {
   it('renders KanbanColumn', () => {
-    const wrapper = mount(KanbanColumn, {
-      global: {
-        plugins: [vuetify],
-      },
+    const wrapper = mountWithVuetify(KanbanColumn, {
       props: {
         color: 'red',
         title: 'Open',
@@ -36,10 +24,7 @@ describe('KanbanColumn', () => {
       { id: '2', title: 'Test Task 2', description: 'Task description 2', status: 'open' },
     ]
 
-    const wrapper = mount(KanbanColumn, {
-      global: {
-        plugins: [vuetify],
-      },
+    const wrapper = mountWithVuetify(KanbanColumn, {
       props: {
         color: 'white',
         title: 'Open',
@@ -54,5 +39,38 @@ describe('KanbanColumn', () => {
     expect(cards[0]?.text()).toContain(tasks[0]?.description)
     expect(cards[1]?.text()).toContain(tasks[1]?.title)
     expect(cards[1]?.text()).toContain(tasks[1]?.description)
+  })
+
+  it('emits task drop event on drop', async () => {
+    const tasks: Task[] = [
+      { id: '1', title: 'Test Task', description: 'Task description', status: 'open' },
+      { id: '2', title: 'Test Task 2', description: 'Task description 2', status: 'open' },
+    ]
+    const wrapper = mountWithVuetify(KanbanColumn, {
+      props: {
+        color: 'white',
+        title: 'Open',
+        status: 'open',
+        tasks,
+      },
+    })
+
+    const dataTransfer = {
+      data: {} as Record<string, string>,
+      setData (key: string, value: string) {
+        this.data[key] = value
+      },
+      getData (key: string) {
+        return this.data[key]
+      },
+    }
+    dataTransfer.setData('taskId', '1')
+
+    await wrapper.find('[data-droppable="true"]').trigger('drop', { dataTransfer })
+
+    expect(wrapper.emitted('drop')).toBeTruthy()
+    expect(wrapper.emitted('drop')?.[0]).toEqual([
+      '1', 'open',
+    ])
   })
 })

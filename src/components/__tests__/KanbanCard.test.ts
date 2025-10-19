@@ -1,21 +1,10 @@
-import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
+import { mountWithVuetify } from '@/test/helpers'
 import KanbanCard from '../KanbanCard.vue'
 
-const vuetify = createVuetify({
-  components,
-  directives,
-})
-
 describe('KanbanCard', () => {
-  it('renders Kanban Card with title and description', () => {
-    const wrapper = mount(KanbanCard, {
-      global: {
-        plugins: [vuetify],
-      },
+  it('renders KanbanCard with title and description', () => {
+    const wrapper = mountWithVuetify(KanbanCard, {
       props: {
         title: 'Kanban Card 1',
         description: 'This is a test card',
@@ -26,10 +15,7 @@ describe('KanbanCard', () => {
   })
 
   it('emits dragstart and toggles dragging classes on drag events', async () => {
-    const wrapper = mount(KanbanCard, {
-      global: {
-        plugins: [vuetify],
-      },
+    const wrapper = mountWithVuetify(KanbanCard, {
       props: {
         title: 'Drag Test Card',
         description: 'Draggable test description',
