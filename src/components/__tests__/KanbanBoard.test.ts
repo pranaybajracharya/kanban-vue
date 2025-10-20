@@ -1,4 +1,4 @@
-import type { VueWrapper } from 'node_modules/@vue/test-utils/dist/vueWrapper'
+import type { VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { mountWithVuetify } from '@/test/helpers'
 import KanbanBoard, { type KanbanBoardExposed } from '../KanbanBoard.vue'
