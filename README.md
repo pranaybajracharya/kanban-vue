@@ -1,20 +1,22 @@
 # Kanban Board
 
+## *Note: Correct Node.js version highly recommended for test to run properly.*
+
 ### Tech Stack
 
-| Technology | Description          |
-| ---------- | -------------------- |
-| Vue 3      | Frontend             |
-| TypeScript | Programming language |
-| Vuetify    | UI Component Library |
-| Vitest     | Unit testing         |
-| Vercel     | Hosting provider     |
+| Technology         | Description                          |
+| ------------------ | -------------------------------------|
+| Node.js v22.20.0   | Development Environment              |
+| Vue 3              | Frontend                             |
+| TypeScript         | Programming language                 |
+| Vuetify            | UI Component Library                 |
+| Vitest             | Unit testing                         |
+| Vercel             | Hosting provider                     |
 
 ## Running the App
 
 ### Prerequisites
-
-- Node.js (v22.9.0 or later)
+- Node.js (v22.20.0)
 - pnpm
 
 ### Clone repository
@@ -25,6 +27,12 @@ git clone https://github.com/pranaybajracharya/kanban-vue.git
 OR
 ```
 git clone git@github.com:pranaybajracharya/kanban-vue.git
+```
+
+### Change directory
+
+```
+cd kanban-vue
 ```
 
 ### Run application
