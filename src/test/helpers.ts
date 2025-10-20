@@ -1,4 +1,3 @@
-import type { Component } from 'vue'
 import { mount } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -10,10 +9,8 @@ const vuetify = createVuetify({
   directives,
 })
 
-export function mountWithVuetify (
-  component: Component,
-  options?: Parameters<typeof mount>[1],
-) {
+export const mountWithVuetify: typeof mount = (...args) => {
+  const [component, options] = args
   const { global, ...rest } = options || {}
   return mount(component, {
     global: {

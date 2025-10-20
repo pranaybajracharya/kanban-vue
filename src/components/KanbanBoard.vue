@@ -4,12 +4,21 @@
   import { ref } from 'vue'
   import { initialTasks, statuses } from '@/data/tasks'
 
+  export type KanbanBoardExposed = {
+    tasks: Task[]
+    onAdd: typeof onAdd
+    onEdit: typeof onEdit
+    onDelete: typeof onDelete
+    onDrop: typeof onDrop
+    getTasksByStatus: typeof getTasksByStatus
+  }
+
   const tasks = ref<Task[]>(initialTasks)
 
-  function onDrop (cardId: string, newStatus: TaskStatus) {
-    const card = tasks.value.find(c => c.id === cardId)
-    if (card) {
-      card.status = newStatus
+  function onDrop (taskId: string, newStatus: TaskStatus) {
+    const task = tasks.value.find(c => c.id === taskId)
+    if (task) {
+      task.status = newStatus
     }
   }
 
