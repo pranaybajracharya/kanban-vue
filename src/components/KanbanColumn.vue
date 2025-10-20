@@ -77,7 +77,7 @@
     <v-divider />
 
     <div
-      class="ga-2 d-flex flex-column pa-2 overflow-y-auto"
+      class="ga-2 d-flex flex-column pa-2 overflow-y-auto h-100"
       data-droppable="true"
       @dragenter.prevent
       @dragover.prevent
